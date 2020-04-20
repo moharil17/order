@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table logistics.roles: ~0 rows (approximately)
+-- Dumping data for table logistics.roles: ~2 rows (approximately)
 DELETE FROM `roles`;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`role_id`, `role_name`) VALUES
@@ -40,14 +40,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(10) NOT NULL,
   `last_name` varchar(10) NOT NULL,
   `address` varchar(70) DEFAULT NULL,
+  `roles` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`mobile_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table logistics.users: ~0 rows (approximately)
+-- Dumping data for table logistics.users: ~1 rows (approximately)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`mobile_no`, `password`, `first_name`, `last_name`, `address`) VALUES
-	('1234567890', NULL, 'aka', 'mul', 'jkd');
+INSERT INTO `users` (`mobile_no`, `password`, `first_name`, `last_name`, `address`, `roles`) VALUES
+	('0987654321', NULL, 'akash', 'akash', 'Pune', 'CUST'),
+	('1234567890', NULL, 'aka', 'mul', 'jkd', 'CUST');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
