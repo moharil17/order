@@ -25,17 +25,17 @@ public class UserController {
 	@Autowired
 	private UserRepository ur;
 	
-/*	@PostMapping("/createUser")
+	@PostMapping("/createUser")
 	public ResponseEntity<String> signup(User user) {
 		
 		User savedUser = us.save(user);
 		return new ResponseEntity<String>("user created.", HttpStatus.CREATED);
-	}*/
+	}
 	
 	@GetMapping("/findUserByMobNo/{mobileNo}")
 	public Optional<User> getUserByMobileNo(@PathVariable("mobileNo") String mobNo) {
 		
-		return ur.findById(mobNo);
+		return us.findById(mobNo);
 	}
 	@GetMapping("/hello")
 	public String greeting() {

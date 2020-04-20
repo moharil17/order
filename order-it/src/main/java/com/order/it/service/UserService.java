@@ -19,6 +19,7 @@ public class UserService {
 	
 	public User save(User user) {
 		
+		user.setRoles("CUST");
 		return userRepository.save(user);
 	}
 

@@ -1,12 +1,9 @@
 package com.order.it.bean;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Table(name="users")
 @Entity
@@ -24,8 +21,7 @@ public class User {
 	
 	private String address;
 	
-	@Transient
-	private Set<Roles> roles;
+	private String roles;
 	
 	public String getMobileNo() {
 		return mobileNo;
@@ -45,10 +41,10 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Set<Roles> getRoles() {
+	public String getRoles() {
 		return roles;
 	}
-	public void setRoles(Set<Roles> roles) {
+	public void setRoles(String roles) {
 		this.roles = roles;
 	}
 	public String getAddress() {
