@@ -7,7 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.order.it.bean.User;
+import com.order.it.entity.User;
+import com.order.it.repository.ProductRepository;
 import com.order.it.repository.UserRepository;
 
 @Service
