@@ -107,7 +107,6 @@ public class UserController {
 		}
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getMobileNo());
 		final String token = jwtUtil.generateToken(userDetails);
-		logger.info(token);
 		return new ResponseEntity<String>(token, HttpStatus.OK);
 	}
 	@GetMapping("/hello")

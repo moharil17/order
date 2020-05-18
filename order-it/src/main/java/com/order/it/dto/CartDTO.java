@@ -11,7 +11,6 @@ public class CartDTO {
 	private int qty;
 	private double amount;
 	
-	
 	public String getMobileNo() {
 		return mobileNo;
 	}

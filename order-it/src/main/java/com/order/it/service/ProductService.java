@@ -4,8 +4,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.order.it.controller.ProductController;
 import com.order.it.entity.Cart;
 import com.order.it.entity.LiveOrder;
 import com.order.it.entity.Products;
@@ -33,33 +30,19 @@ public class ProductService {
 	private LiveOrderReopsitory lor;
 	@Autowired
 	private ModelMapper modelMapper;
-
-	Logger logger = LogManager.getLogger(ProductService.class);
-
+	
 	public List<Products> getAllProducts() {
 		return (List<Products>) pr.findAll();
 	}
-
-	public String save(Cart cart) {
-		Products productInfo = pr.findById(cart.getId().getProdID()).get();
-		Cart existingCartInfo = cr.findById(cart.getId()).orElse(null);
-		if (existingCartInfo == null) {
-			cart.setAmount(productInfo.getPricePerUnit() * cart.getQty());
-		} else if (existingCartInfo.getQty() >= productInfo.getMaxQtyLimit())
-			return "Already max amount in cart. can't add more";
-
-		else if (cart.getQty() + existingCartInfo.getQty() > productInfo.getMaxQtyLimit())
-			return "total quantity exceeds max limit";
-		else {
-			cart.setAmount(productInfo.getPricePerUnit() * cart.getQty() + existingCartInfo.getAmount());
-			cart.setQty(existingCartInfo.getQty() + cart.getQty());
-		}
-		cr.save(cart);
-		return "Added to cart";
+	
+	public Cart save(Cart cart) {
+		
+		cart.setAmount(cart.getAmount()*cart.getQty());
+		return cr.save(cart);
 	}
 
 	public boolean removeFromCart(Cart cart) {
-
+		
 		Cart cartRow = cr.findById(cart.getId()).get();
 		cr.delete(cartRow);
 		return true;
@@ -75,8 +58,7 @@ public class ProductService {
 
 		List<Cart> cartItems = cr.findByIdMobileNo(mobileNo);
 		List<LiveOrder> items = new ArrayList<>();
-		Type listType = new TypeToken<List<LiveOrder>>() {
-		}.getType();
+		Type listType = new TypeToken<List<LiveOrder>>(){}.getType();
 		items = modelMapper.map(cartItems, listType);
 		// save to live_orders and delete them from cart
 		lor.saveAll(items);
@@ -85,7 +67,8 @@ public class ProductService {
 	}
 
 	public void addProduct(Products p) {
-
+		
+		
 	}
 
 }
