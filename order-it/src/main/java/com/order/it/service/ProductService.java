@@ -54,10 +54,18 @@ public class ProductService {
 	}
 
 	public boolean removeFromCart(Cart cart) {
-		
-		Cart cartRow = cr.findById(cart.getId()).get();
-		cr.delete(cartRow);
-		return true;
+		try {
+			Cart cartRow = cr.findById(cart.getId()).orElse(null);
+			if (cartRow == null || (cartRow.getQty() - cart.getQty()) <= 0) {
+				cr.delete(cartRow);
+				return true;
+			}
+			cartRow.setQty(cartRow.getQty() - cart.getQty());
+			cr.save(cartRow);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public List<Cart> getAllItemsFromCart(String mobileNo) {
@@ -67,10 +75,17 @@ public class ProductService {
 	}
 
 	public boolean copyItemsFromCartToLiveOrders(String mobileNo) {
-
+		Date todayDateTime = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String todayDateTimeString = sdf.format(todayDateTime);
 		List<Cart> cartItems = cr.findByIdMobileNo(mobileNo);
+		for (Cart items : cartItems) {
+			items.setOrderPlacedOn(todayDateTimeString);
+		}
 		List<LiveOrder> items = new ArrayList<>();
-		Type listType = new TypeToken<List<LiveOrder>>(){}.getType();
+
+		Type listType = new TypeToken<List<LiveOrder>>() {
+		}.getType();
 		items = modelMapper.map(cartItems, listType);
 		// save to live_orders and delete them from cart
 		lor.saveAll(items);

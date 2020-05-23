@@ -14,10 +14,12 @@ public class LiveOrder {
 	@EmbeddedId
 	private CartPK id;
 	private int qty;
-	@Column(name="unit_id")
-	private String unit;
+	/*@Column(name="unit_id")
+	private String unit;*/
 	private double amount;
 	private String status;
+	@Column(name = "order_placed_on", columnDefinition = "TIMESTAMP")
+	private String orderPlacedOn;
 	
 	public CartPK getId() {
 		return id;
@@ -31,12 +33,12 @@ public class LiveOrder {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
-	public String getUnit() {
+	/*public String getUnit() {
 		return unit;
 	}
 	public void setUnit(String unit) {
 		this.unit = unit;
-	}
+	}*/
 	public double getAmount() {
 		return amount;
 	}
@@ -49,4 +51,14 @@ public class LiveOrder {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getOrderPlacedOn() {
+		return orderPlacedOn;
+	}
+	public void setOrderPlacedOn(String orderPlacedOn) {
+		this.orderPlacedOn = orderPlacedOn;
+	}
+	
+	
+	
+	
 }
